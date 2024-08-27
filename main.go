@@ -8,16 +8,12 @@ import (
 	"time"
 )
 
-const version string = "0.1"
+const version string = "0.1.1"
 
 var (
 	localTime    bool     // display request timestamps in local time (non-default)
 	requestCount int  = 0 // start request counting from 0 (default)
 )
-
-/*
-# [] Display name of time zone for when using local time zone option.
-*/
 
 func Site(w http.ResponseWriter, r *http.Request) {
 	r.ParseForm()
@@ -30,6 +26,7 @@ func Site(w http.ResponseWriter, r *http.Request) {
 		requestTimestamp = time.Now().UTC().Format("02-01-2006 15:04:05.000000 UTC")
 	}
 	fmt.Printf("\n-- [Request: %d] [%s] --\n", requestCount, requestTimestamp)
+	fmt.Printf("Source: %s\n", r.RemoteAddr)
 	fmt.Printf("Host: %s\n", r.Host)
 	fmt.Printf("Method: %s\n", r.Method)
 	fmt.Printf("Path: %s\n", r.URL.Path)
